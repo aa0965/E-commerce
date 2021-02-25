@@ -1,0 +1,9 @@
+export const addCartItem = (cartItems,cartItemToAdd) => {
+    const cartItemFound = cartItems.find(cartItem => cartItem.id == cartItemToAdd.id);
+    if(cartItemFound){
+        return cartItems.map(item => item.id==cartItemFound.id ? {...item,quantity:item.quantity+1}:item )
+    }
+    return [...cartItems,{...cartItemToAdd,quantity:1}];
+}
+
+// export default addCartItem;
