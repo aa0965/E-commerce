@@ -1,28 +1,18 @@
 import React from 'react';
+// C:\Users\Anshu\Desktop\Node\React\crwn-clothing\src
+import { Route } from 'react-router-dom';
 
-import SHOP_DATA from './shop.data.js';
+import CollectionPage from '../collection/ollection.component';
+import CollectionOverview from '../../components/collection-overvirew/collection-overview.component.jsx';
 
-import CollectionPreview from '../../components/collection-preview/collection-preview.component.jsx';
 
-class ShopPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      collections: SHOP_DATA
-    };
-  }
-
-  render() {
-    const { collections } = this.state;
-    return (
+const ShopPage = ({match}) =>  (
       <div className='shop-page'>
-        {collections.map(({ id, ...otherCollectionProps }) => (
-          <CollectionPreview key={id} {...otherCollectionProps} />
-        ))}
-      </div>
+<Route exact path={`${match.path}`} component={CollectionOverview} />
+    <Route path={`${match.path}/:collectionId`} component={CollectionPage} />      </div>
     );
-  }
-}
+  
+
+
 
 export default ShopPage;
