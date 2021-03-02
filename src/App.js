@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import {useEffect} from 'react';
 import {Switch ,Route,Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {createStructuredSelector} from 'reselect';
@@ -9,41 +9,23 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component.jsx';
 // import SignUp from './components/sign-up/sign-up.component.jsx';
-import { auth,createUserProfile } from './firebase/firebase.utils';
+import { auth,createUserProfile} from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import './App.css';
+// import { selectCurrentUser } from './redux/user/user.selectors';
+import { selectCollectionsForPreview, selectShopData } from './redux/shop/shop.selectors';
 import { selectCurrentUser } from './redux/user/user.selectors';
-
-class App extends React.Component {
+import { checkUserSession } from './redux/user/user.actions';
+const App=({checkUserSession,currentUser }) => {
   
-  unsubscribeFromAuth = null;
 
-  componentDidMount() {
-    const { setCurrentUser } = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if(userAuth){
-         const userRef=await createUserProfile(userAuth);
+  useEffect(() => {
+    checkUserSession();
+  },[checkUserSession])
 
-         userRef.onSnapshot(snap => {
-           setCurrentUser({
-                id:snap.id,
-                ...snap.data()
-           })
-         })
-         
-      }
-      setCurrentUser(userAuth);
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
-
-
-
-
-render() {
+  // componentWillUnmount() {
+  //   this.unsubscribeFromAuth();
+  // }
     return (
       <div>
         <Header  />
@@ -53,7 +35,7 @@ render() {
           <Route exact path='/checkout' component={CheckoutPage} />
           <Route path='/signin' 
            render={() =>
-            this.props.currentUser ? (
+            currentUser ? (
               <Redirect to='/' />
             ) : (
               <SignInAndSignUpPage />
@@ -64,14 +46,15 @@ render() {
       </div>
     );
   }
-}
+
 
 const mapStateToProps = createStructuredSelector({
   currentUser:selectCurrentUser
+  // collections:selectCollectionsForPreview
 })
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  checkUserSession: () => dispatch(checkUserSession())
 });
 
 export default connect(
