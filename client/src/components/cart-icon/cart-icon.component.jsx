@@ -1,17 +1,19 @@
 import React from 'react';
-import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 import {connect} from 'react-redux';
 import { selectCartItemsCount } from '../../redux/cart/cart.selectors';
-import './cart-icon.styles.scss';
-import { toggleCheckout } from '../../redux/cart/cart.actions';
+import {
+  CartContainer,
+  ShoppingIcon,
+  ItemCountContainer
+} from './cart-icon.styles';import { toggleCheckout } from '../../redux/cart/cart.actions';
 const CartIcon = ({toggleCheckout,itemCount}) => {
     return(
-        <div className='cart-icon' 
+      <CartContainer 
         onClick={toggleCheckout}
         >
-        <ShoppingIcon className='shopping-icon' />
-        <span className='item-count'>{itemCount}</span>
-      </div>
+        <ShoppingIcon />
+        <ItemCountContainer>{itemCount}</ItemCountContainer>
+      </CartContainer>
     )
 }
 

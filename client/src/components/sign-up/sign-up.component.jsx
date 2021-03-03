@@ -6,8 +6,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import {signUpStart} from '../../redux/user/user.actions';
 import { auth, createUserProfile } from '../../firebase/firebase.utils';
 
-import './sign-up.styles.scss';
-
+import { SignUpContainer, SignUpTitle,ButtonsBarContainer } from './sign-up.styles';
 const SignUp =({signUpStart}) => {
   const [userCredentials,setUserCredentials] = useState({
     displayName: '',
@@ -39,8 +38,8 @@ const SignUp =({signUpStart}) => {
 
     
     return (
-      <div className='sign-up'>
-        <h2 className='title'>I do not have a account</h2>
+      <SignUpContainer>
+        <SignUpTitle>I do not have a account</SignUpTitle>
         <span>Sign up with your email and password</span>
         <form className='sign-up-form' onSubmit={handleSubmit}>
           <FormInput
@@ -74,10 +73,11 @@ const SignUp =({signUpStart}) => {
             onChange={handleChange}
             label='Confirm Password'
             required
-          />
+          /><ButtonsBarContainer>
           <CustomButton type='submit'>SIGN UP</CustomButton>
+          </ButtonsBarContainer>
         </form>
-      </div>
+      </SignUpContainer>
     );
   }
 

@@ -11,7 +11,7 @@ import Header from './components/header/header.component.jsx';
 // import SignUp from './components/sign-up/sign-up.component.jsx';
 import { auth,createUserProfile} from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
-import './App.css';
+import { GlobalStyle } from './global.styles';
 // import { selectCurrentUser } from './redux/user/user.selectors';
 import { selectCollectionsForPreview, selectShopData } from './redux/shop/shop.selectors';
 import { selectCurrentUser } from './redux/user/user.selectors';
@@ -28,6 +28,7 @@ const App=({checkUserSession,currentUser }) => {
   // }
     return (
       <div>
+        <GlobalStyle/>
         <Header  />
         <Switch>
           <Route exact path='/' component={HomePage} />
